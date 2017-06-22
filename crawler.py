@@ -4,6 +4,8 @@ from urllib.request import urlopen
 import urllib.request
 import re
 
+# Need to handle binary html code
+# Need to handle visiting different/bad sites. Code terminates when a bad site is met
 
 def get_url_google(keyword,pages):
 

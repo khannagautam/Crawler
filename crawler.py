@@ -4,8 +4,6 @@ from urllib.request import urlopen
 import urllib.request
 import re
 
-# Need to handle binary html code
-# Need to handle visiting different/bad sites. Code terminates when a bad site is met
 
 def get_url_google(keyword,pages):
 
@@ -20,7 +18,7 @@ def get_url_google(keyword,pages):
 		get_urls(crawl_url,to_crawl)
 	
 	#printing links scrapped as a list
-	crawl(to_crawl,100)
+	crawl(to_crawl,500)
 	
 def get_urls(page,to_crawl):
 
@@ -38,18 +36,21 @@ def crawl(to_crawl, page_limit):
 	f = open( "parsed.txt", "w" )
 	while to_crawl and len(crawled) < page_limit:
 		page=to_crawl.pop()
-		if page not in crawled:
+		if page not in crawled and page[0:4]  == 'http' :
+			print (page)
 			try:
-				req = urllib.request.Request(page, headers={'User-Agent': 'Mozilla/5.0'})
+				html = urlopen(page)
 			except Exception as e:
-				print(e)
+				print (e)
 				f.write("Crawl unsuccessful for site no")
 				f.write(str(len(crawled)+1))
-				f.write("\n\n")
+			
 				crawled.append(page)
 				continue
-			soup = BeautifulSoup(urlopen(req).read(),"html.parser")
-			f.write(soup.text)
+			
+			#work to be done
+			soup = BeautifulSoup(html,"html.parser")
+			f.write(soup.prettify())
 			f.write(" Crawled successfully site no ")
 			f.write(str(len(crawled)+1))
 			f.write("\n\n")

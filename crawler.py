@@ -49,7 +49,7 @@ def crawl(to_crawl, page_limit):
 				continue
 			
 			#work to be done
-			soup = BeautifulSoup(html,"html.parser")
+			soup = BeautifulSoup(html.read(),"html.parser")
 			f.write(soup.prettify())
 			f.write(" Crawled successfully site no ")
 			f.write(str(len(crawled)+1))
